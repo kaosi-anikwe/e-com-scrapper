@@ -12,6 +12,7 @@ Example:
     logger.info("started")
 
 """
+
 from __future__ import annotations
 
 import json
@@ -27,7 +28,9 @@ class JsonFormatter(logging.Formatter):
     Produces one-line JSON objects with timestamp, level, logger name and message.
     """
 
-    def format(self, record: logging.LogRecord) -> str:  # pragma: no cover - small helper
+    def format(
+        self, record: logging.LogRecord
+    ) -> str:  # pragma: no cover - small helper
         record_dict = {
             "ts": self.formatTime(record, self.datefmt),
             "level": record.levelname,
@@ -39,14 +42,34 @@ class JsonFormatter(logging.Formatter):
             record_dict["exc_info"] = self.formatException(record.exc_info)
         # Include any extra attributes
         extras = {
-            k: v for k, v in record.__dict__.items()
-            if k not in ("name", "msg", "args", "levelname", "levelno", "pathname",
-                         "filename", "module", "exc_info", "exc_text", "stack_info",
-                         "lineno", "funcName", "created", "msecs", "relativeCreated",
-                         "thread", "threadName", "processName", "process")
+            k: v
+            for k, v in record.__dict__.items()
+            if k
+            not in (
+                "name",
+                "msg",
+                "args",
+                "levelname",
+                "levelno",
+                "pathname",
+                "filename",
+                "module",
+                "exc_info",
+                "exc_text",
+                "stack_info",
+                "lineno",
+                "funcName",
+                "created",
+                "msecs",
+                "relativeCreated",
+                "thread",
+                "threadName",
+                "processName",
+                "process",
+            )
         }
         if extras:
-            record_dict["extra"] = extras # type: ignore
+            record_dict["extra"] = extras  # type: ignore
         return json.dumps(record_dict, default=str)
 
 
@@ -55,7 +78,7 @@ def get_logger(
     log_file: Optional[str] = None,
     level: int = logging.INFO,
     rotation: str = "size",
-    max_bytes: int = 10 * 1024 * 1024,
+    max_bytes: int = 1 * 1024 * 1024,
     backup_count: int = 5,
     when: str = "midnight",
     interval: int = 1,
@@ -154,20 +177,3 @@ def get_logger(
     logger.propagate = False
 
     return logger
-
-
-# Convenience aliases
-def get_amazon_logger(**kwargs) -> logging.Logger:
-    return get_logger("amazon", **kwargs)
-
-
-def get_etsy_logger(**kwargs) -> logging.Logger:
-    return get_logger("etsy", **kwargs)
-
-
-def get_shopify_logger(**kwargs) -> logging.Logger:
-    return get_logger("shopify", **kwargs)
-
-
-def get_ebay_logger(**kwargs) -> logging.Logger:
-    return get_logger("ebay", **kwargs)
