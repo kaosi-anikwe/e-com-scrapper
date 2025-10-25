@@ -1,4 +1,4 @@
-# scripts/ebay_scraper.py
+# scripts/ebay.py
 """
 Standalone eBay scraper script that uses the project's Apify SDK wrapper (utils.apify_client.run_actor_and_save).
 

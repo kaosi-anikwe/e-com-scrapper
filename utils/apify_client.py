@@ -97,7 +97,7 @@ class ApifySdkClient:
         # The SDK provides list_items, iterate_items and other helpers.
         items = list(ds_client.iterate_items())
         with open(output_path, "w", encoding="utf-8") as fh:
-            json.dump(str(items), fh, ensure_ascii=False, indent=2)
+            json.dump(items, fh, ensure_ascii=False, indent=2)
         self.logger.info(
             "Saved dataset to file", extra={"path": output_path, "count": len(items)}
         )
@@ -146,7 +146,7 @@ def run_actor_and_save(
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     try:
         with open(output_path, "w", encoding="utf-8") as fh:
-            json.dump(run, fh, ensure_ascii=False, indent=2)
+            json.dump(str(run), fh, ensure_ascii=False, indent=2)
         logger.info("Saved actor run metadata", extra={"path": output_path})
     except Exception:
         logger.exception(

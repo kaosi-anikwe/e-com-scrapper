@@ -57,6 +57,7 @@ def _load_settings_from_env() -> Settings:
             "etsy": os.getenv("ETSY_ACTOR"),
             "alibaba": os.getenv("ALIBABA_ACTOR"),
             "walmart": os.getenv("WALMART_ACTOR"),
+            "jumia": os.getenv("JUMIA_ACTOR"),
         },
         DEFAULT_MEMORY_MBYTES=int(os.getenv("DEFAULT_MEMORY_MBYTES", "1024")),
         DEFAULT_WAIT_FOR_FINISH=(
