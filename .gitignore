@@ -216,3 +216,6 @@ data/
 # Logs
 logs/
 *.log
+
+# Files use internally
+store/
